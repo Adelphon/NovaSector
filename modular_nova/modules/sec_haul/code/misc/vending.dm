@@ -69,7 +69,7 @@
 			"name" = "Alternate",
 			"icon" = "shield-halved",
 			"products" = list(
-		/obj/item/clothing/glasses/hud/security/sunglasses/blue = 3,
+			/obj/item/clothing/glasses/hud/security/sunglasses/blue = 3,
 				/obj/item/clothing/head/beret/sec/nova = 4,
 				/obj/item/clothing/head/security_cap = 4,
 				/obj/item/clothing/head/helmet/sec/white = 3,
@@ -99,6 +99,29 @@
 				/obj/item/storage/backpack/satchel/sec/blue = 4,
 				/obj/item/storage/backpack/duffelbag/sec/blue = 4,
 				/obj/item/storage/backpack/messenger/sec/blue = 4,
+			),
+		),
+
+		list(
+			"name" = "White",
+			"icon" = "shield-halved",
+			"products" = list(
+				/obj/item/clothing/under/rank/security/nova/modskin/white = 4,
+				/obj/item/clothing/under/rank/security/nova/trousers/white = 4,
+				/obj/item/clothing/under/rank/security/nova/secshorts/white = 4,
+				/obj/item/clothing/under/rank/security/nova/secjumpsuit/white = 4,
+			),
+		),
+
+
+		list(
+			"name" = "Black",
+			"icon" = "shield-halved",
+			"products" = list(
+				/obj/item/clothing/under/rank/security/nova/modskin/black = 4,
+				/obj/item/clothing/under/rank/security/nova/trousers/black = 4,
+				/obj/item/clothing/under/rank/security/nova/secshorts/black = 4,
+				/obj/item/clothing/under/rank/security/nova/secjumpsuit/black = 4,
 			),
 		),
 	)
