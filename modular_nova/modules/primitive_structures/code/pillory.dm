@@ -12,6 +12,7 @@
 	layer = ABOVE_MOB_LAYER
 	var/base_icon = "pillory_single"
 	var/latched = FALSE
+	var/mutable_appearance/pillory_hand_overlay = null
 
 /obj/structure/pillory/examine(mob/user)
 	. = ..()
@@ -51,12 +52,19 @@
 		playsound(src, 'sound/items/tools/crowbar.ogg', 100)
 		latched = FALSE
 		icon_state = base_icon
+		remove_hand_overlay()
 		update_icon()
 	else
 		user.visible_message(span_warning("[user] latches [src]."), \
 			span_notice("I latch [src]."))
 		playsound(src, 'sound/items/tools/crowbar.ogg', 100)
 		latched = TRUE
+		icon_state = base_icon
+		if(buckled_mobs.len)
+			var/mob/living/carbon/human/H = pick(buckled_mobs)
+			if(istype(H))
+				apply_hand_overlay(H)
+		update_icon()
 
 /obj/structure/pillory/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if (!anchored)
@@ -80,11 +88,12 @@
 
 			if (istype(S))
 				// Simplified: no species-specific offsets
-				icon_state = "[base_icon]-pillory_hand_overlay"
+				icon_state = base_icon
 				latched = TRUE
 				H.layer = BELOW_MOB_LAYER
 				RegisterSignal(H, COMSIG_USER_PRE_ITEM_ATTACK, TYPE_PROC_REF(/mob/living, _pillory_block_item_attack))
 				RegisterSignal(H, COMSIG_USER_PRE_ITEM_ATTACK_SECONDARY, TYPE_PROC_REF(/mob/living, _pillory_block_item_attack_secondary))
+				apply_hand_overlay(H)
 				update_icon()
 			else
 				unbuckle_all_mobs()
@@ -98,9 +107,23 @@
 /obj/structure/pillory/post_unbuckle_mob(mob/living/M)
 	M.layer = MOB_LAYER
 	icon_state = base_icon
+	remove_hand_overlay()
 	UnregisterSignal(M, list(COMSIG_USER_PRE_ITEM_ATTACK, COMSIG_USER_PRE_ITEM_ATTACK_SECONDARY))
 	update_icon()
 	..()
+
+/obj/structure/pillory/proc/apply_hand_overlay(mob/living/carbon/human/H)
+	remove_hand_overlay()
+	pillory_hand_overlay = mutable_appearance(icon, "[base_icon]-pillory_hand_overlay", layer = layer)
+	if(H.skin_tone)
+		pillory_hand_overlay.color = skintone2hex(H.skin_tone)
+	add_overlay(pillory_hand_overlay)
+
+/obj/structure/pillory/proc/remove_hand_overlay()
+	if(!pillory_hand_overlay)
+		return
+	cut_overlay(pillory_hand_overlay)
+	pillory_hand_overlay = null
 
 /obj/structure/pillory/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(!latched)
