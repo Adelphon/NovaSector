@@ -2,7 +2,7 @@
 
 ### Description:
 
-Contains various items of primitive style for icecats and sometimes even ashwalkers
+Contains various items of primitive style for icecats and sometimes even ashwalkers, including pillories for restraining prisoners.
 
 ### TG Proc/File Changes:
 
