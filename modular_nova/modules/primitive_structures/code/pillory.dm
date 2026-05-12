@@ -117,13 +117,18 @@
 	pillory_hand_overlay = mutable_appearance(icon, "[base_icon]-pillory_hand_overlay", layer = layer)
 	if(H.skin_tone)
 		pillory_hand_overlay.color = skintone2hex(H.skin_tone)
-	add_overlay(pillory_hand_overlay)
+	H.add_overlay(pillory_hand_overlay)
+	update_icon()
 
 /obj/structure/pillory/proc/remove_hand_overlay()
 	if(!pillory_hand_overlay)
 		return
-	cut_overlay(pillory_hand_overlay)
+	// Need to find the buckled human to remove overlay from them
+	for(var/mob/living/carbon/human/H in buckled_mobs)
+		H.cut_overlay(pillory_hand_overlay)
+		break
 	pillory_hand_overlay = null
+	update_icon()
 
 /obj/structure/pillory/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(!latched)
