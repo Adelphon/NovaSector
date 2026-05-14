@@ -9481,6 +9481,7 @@
 #include "modular_nova\modules\solfed_mechs\code\equipment\swarm_rocket_pod.dm"
 #include "modular_nova\modules\soulstone_changes\code\soulstone.dm"
 #include "modular_nova\modules\soulstone_changes\code\components\return_on_death.dm"
+#include "modular_nova\modules\space_dragon\space_dragon.dm"
 #include "modular_nova\modules\space_vines\scythes.dm"
 #include "modular_nova\modules\space_vines\venus.dm"
 #include "modular_nova\modules\space_vines\vine_event.dm"
