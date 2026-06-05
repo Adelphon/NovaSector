@@ -169,3 +169,23 @@
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
 	)
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND
+
+/datum/crafting_recipe/sandbags
+	name = "Sandbag"
+	desc = "A cloth bag filled with sand."
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/cloth = 1,
+		/obj/item/stack/ore/glass = 1,
+	)
+	result = /obj/item/stack/sheet/mineral/sandbags
+	category = CAT_STRUCTURE
+
+/datum/crafting_recipe/sandbag_barricade
+	name = "Sandbag Barricade C.U.C.K.S"
+	time = 8 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/sandbags = 5,
+	)
+	result = /obj/structure/barricade/sandbags
+	category = CAT_STRUCTURE

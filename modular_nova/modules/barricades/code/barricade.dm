@@ -837,3 +837,52 @@
 		new /obj/item/quickdeploy/barricade/plasteel(src)
 	for(var/i = 0, i < 9, i ++)
 		new /obj/item/quickdeploy/barricade(src)
+
+/*----------------------*/
+// SANDBAGS
+/*----------------------*/
+
+/obj/structure/barricade/sandbags
+	name = "sandbag barricade"
+	desc = "A bunch of bags filled with sand, stacked into a small wall. Surprisingly sturdy, albeit labour intensive to set up. Trusted to do the job since 1914."
+	icon = 'modular_nova/modules/barricades/icons/barricade.dmi'
+	icon_state = "sandbag_0"
+	max_integrity = 325
+	var/soft_armor = list(MELEE = 0, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 100, FIRE = 80, ACID = 40)
+	var/coverage = 128
+	var/stack_type = /obj/item/stack/sheet/mineral/sandbags
+	var/hit_sound = "sound/weapons/genhit.ogg"
+	var/barricade_type = "sandbag"
+	var/can_wire = TRUE
+
+/obj/structure/barricade/sandbags/setDir(newdir)
+	. = ..()
+	if(dir == SOUTH)
+		pixel_y = -7
+	else
+		pixel_y = 0
+
+/obj/structure/barricade/sandbags/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(.)
+		return
+
+	if(istype(I, /obj/item/stack/sheet/mineral/sandbags))
+		if(get_integrity() == max_integrity)
+			balloon_alert(user, "already repaired!")
+			return
+		var/obj/item/stack/D = I
+		if(D.get_amount() < 1)
+			balloon_alert(user, "not enough sandbags!")
+			return
+		balloon_alert_to_viewers("replacing sandbags...")
+
+		if(!do_after(user, 3 SECONDS, target = src) || get_integrity() >= max_integrity)
+			return
+
+		if(!D.use(1))
+			return
+
+		repair_damage(max_integrity * 0.2, user) //Each sandbag restores 20% of max health as 5 sandbags = 1 sandbag barricade.
+		balloon_alert_to_viewers("repaired")
+		update_icon()
